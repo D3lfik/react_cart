@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import React from 'react';
-import CartItem from './Cartitem';
+import Cart from './cart';
 
 function App() {
   return (
     <div className="App">
     <h1>Cart</h1>
-    <CartItem/>
+    <Cart/>
 
     </div>
   );

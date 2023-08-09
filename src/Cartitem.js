@@ -12,9 +12,49 @@ class CartItem extends React.Component{
             img:''
         }
        // this.increaseQuantity = this.increaseQuantity.bind(this);
+    //    this.testing();
     }
+    // // testing() {
+    // //     const promise = new Promise ((resolve,reject)=>{
+    // //         setTimeout(() =>{
+    // //             resolve('done');
+
+    // //         },5000);
+    // //     })
+    // //     promise.then(()=>{
+    // //         this.setState({qty:this.state.qty + 30});
+    // //     } )
+    // }
     increaseQuantity =() => {
-        console.log('this.test', this.state);
+        
+        //setState form 1
+        // this.setState({
+        //     qty:this.state.qty + 1
+        // });
+        // setState form 2 
+        this.setState((prevState)=>{
+            return {
+                qty:prevState.qty + 1
+            }
+
+        } , () =>{
+            console.log('this.test', this.state);
+        })
+    }
+    decreaseQuantity = () =>{
+        const {qty} = this.state;
+        if (qty==0){
+            return;
+        }
+        //if prevState required use this
+        this.setState((prevState)=>{
+            return{
+                qty:prevState.qty - 1
+
+            }
+        } , () =>{
+            console.log('this.test', this.state);
+        })
     }
     render(){
         const { price , title, qty} = this.state;
@@ -36,7 +76,10 @@ class CartItem extends React.Component{
                         onClick={this.increaseQuantity}
                          />
                         <img alt='decrease' 
-                        className="actions-icons" src=""
+                        className="actions-icons"
+                         src=""
+                         onClick={this.decreaseQuantity}
+                        
                         />
                         <img alt='delete' 
                         className="actions-icons" 
