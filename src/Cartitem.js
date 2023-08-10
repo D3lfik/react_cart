@@ -3,17 +3,7 @@ import App from "./App";
 import { FaPlus } from "react-icons/fa6";
 
 class CartItem extends React.Component{
-    constructor(){
-        super();
-        this.state = {
-            price:999,
-            title: 'Mobile Phone',
-            qty: 1,
-            img:''
-        }
-       // this.increaseQuantity = this.increaseQuantity.bind(this);
-    //    this.testing();
-    }
+  
     // // testing() {
     // //     const promise = new Promise ((resolve,reject)=>{
     // //         setTimeout(() =>{
@@ -57,7 +47,8 @@ class CartItem extends React.Component{
         })
     }
     render(){
-        const { price , title, qty} = this.state;
+        console.log('this.props', this.props)
+        const { price ,title, qty} = this.props.product;
         return(
             <div className="cart-item">
                 <div className="left-block">
@@ -65,7 +56,7 @@ class CartItem extends React.Component{
 
                 </div>
                 <div className="right-block">
-                    <div style={{fontSize:25}}>{this.state.title}</div>
+                    <div style={{fontSize:25}}>{title}</div>
                     <div style={{color: '#777'}}>Rs:{price}</div>
                     <div style={{color: '#777'}}>Qty:{qty}</div>
                     <div className="cart-item-actions">
