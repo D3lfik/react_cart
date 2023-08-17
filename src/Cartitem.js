@@ -1,54 +1,11 @@
 import React from "react";      
-import App from "./App";
-import { FaPlus } from "react-icons/fa6";
 
 class CartItem extends React.Component{
   
-    // // testing() {
-    // //     const promise = new Promise ((resolve,reject)=>{
-    // //         setTimeout(() =>{
-    // //             resolve('done');
-
-    // //         },5000);
-    // //     })
-    // //     promise.then(()=>{
-    // //         this.setState({qty:this.state.qty + 30});
-    // //     } )
-    // }
-    increaseQuantity =() => {
-        
-        //setState form 1
-        // this.setState({
-        //     qty:this.state.qty + 1
-        // });
-        // setState form 2 
-        this.setState((prevState)=>{
-            return {
-                qty:prevState.qty + 1
-            }
-
-        } , () =>{
-            console.log('this.test', this.state);
-        })
-    }
-    decreaseQuantity = () =>{
-        const {qty} = this.state;
-        if (qty==0){
-            return;
-        }
-        //if prevState required use this
-        this.setState((prevState)=>{
-            return{
-                qty:prevState.qty - 1
-
-            }
-        } , () =>{
-            console.log('this.test', this.state);
-        })
-    }
     render(){
         console.log('this.props', this.props)
         const { price ,title, qty} = this.props.product;
+        const {product,onIncreaseQuantity,onDecreaseQuantity,onDeleteProduct} = this.props;
         return(
             <div className="cart-item">
                 <div className="left-block">
@@ -64,17 +21,19 @@ class CartItem extends React.Component{
                         <img alt='increase' 
                         className="actions-icons"
                         src = ""
-                        onClick={this.increaseQuantity}
+                        onClick={()=>onIncreaseQuantity(product)}
                          />
                         <img alt='decrease' 
                         className="actions-icons"
                          src=""
-                         onClick={this.decreaseQuantity}
+                         onClick={()=>onDecreaseQuantity(product)}
                         
                         />
                         <img alt='delete' 
                         className="actions-icons" 
                         src=""
+                        onClick={()=>onDeleteProduct(product.id)}
+
                         />
 
                 </div>
