@@ -1,15 +1,13 @@
 import React from "react";      
 
-class CartItem extends React.Component{
-  
-    render(){
-        console.log('this.props', this.props)
-        const { price ,title, qty} = this.props.product;
-        const {product,onIncreaseQuantity,onDecreaseQuantity,onDeleteProduct} = this.props;
+const CartItem = (props) => {
+       // console.log('this.props', this.props)
+        const { price ,title, qty} = props.product;
+        const {product,onIncreaseQuantity,onDecreaseQuantity,onDeleteProduct} = props;
         return(
             <div className="cart-item">
                 <div className="left-block">
-                    <img style={styles.image}/>
+                    <img style={styles.image} src={product.img}/>
 
                 </div>
                 <div className="right-block">
@@ -18,20 +16,20 @@ class CartItem extends React.Component{
                     <div style={{color: '#777'}}>Qty:{qty}</div>
                     <div className="cart-item-actions">
                         {/*Buttons*/} </div>
-                        <img alt='increase' 
+                        <img style={{width: 50,height:50}} alt='increase' 
                         className="actions-icons"
-                        src = ""
+                        src = "https://as2.ftcdn.net/v2/jpg/01/26/10/59/1000_F_126105961_6vHCTRX2cPOnQTBvx9OSAwRUapYTEmYA.jpg"
                         onClick={()=>onIncreaseQuantity(product)}
                          />
-                        <img alt='decrease' 
+                        <img style={{width: 50,height:50}} alt='decrease' 
                         className="actions-icons"
-                         src=""
+                         src="https://as1.ftcdn.net/v2/jpg/03/73/49/86/1000_F_373498649_nBxauQ0ipBSVrVcMpWWVmTpXu3BLvRyY.jpg"
                          onClick={()=>onDecreaseQuantity(product)}
                         
                         />
-                        <img alt='delete' 
+                        <img style={{width: 50,height:50}} alt='delete' 
                         className="actions-icons" 
-                        src=""
+                        src="https://as2.ftcdn.net/v2/jpg/03/73/50/09/1000_F_373500918_7vISJB85YXvvu7SgnpktP752LWRrLzyI.jpg"
                         onClick={()=>onDeleteProduct(product.id)}
 
                         />
@@ -40,7 +38,7 @@ class CartItem extends React.Component{
 
             </div>
         )
-    }
+    
 }
 
 const styles = {
