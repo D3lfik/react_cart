@@ -2,37 +2,40 @@ import logo from './logo.svg';
 import React from 'react';
 import Cart from './cart';
 import Navbar from './Navbar';
+import { firestore } from './firebase';
 class App extends React.Component {
       constructor(){
         super();
         this.state = {
-        products: [
-            {
-                price:99,
-                title: 'Watch',
-                qty: 1,
-                img:'https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=394&q=80',
-                id:1
-            },
-            {
-                price:999,
-                title: 'Mobile Phone',
-                qty: 1,
-                img:'https://images.unsplash.com/photo-1598327105666-5b89351aff97?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=327&q=80',
-                id:2
-            },
-            {
-                price:9999,
-                title: 'Laptop',
-                qty: 1,
-                img:'https://images.unsplash.com/photo-1603302576837-37561b2e2302?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1168&q=80',
-                id:3
-            }
-        ]
+        products: [],
+        loading : true
         }
       // this.increaseQuantity = this.increaseQuantity.bind(this);
     //    this.testing();
     }
+
+    componentDidMount(){
+      firestore
+      .collection('products')
+      .get()
+      .then((snapshot)=>{
+        console.log(snapshot);
+        snapshot.docs.map((doc) =>{
+          console.log(doc.data());
+        });
+        const products = snapshot.docs.map((doc)=>{
+          const data = doc.data();
+          data['id'] = doc.id;
+          return data;
+        })
+        this.setState({
+          products ,
+          loading:false
+        })
+      })
+    }
+
+
     handleIncreaseQuantity = (product) =>{
         console.log('inc qty of ', product);
         const {products} = this.state;
@@ -77,12 +80,15 @@ class App extends React.Component {
       const {products} = this.state;
       let cartTotal = 0;
       products.map((product)=> {
+        if (product.qty > 0){
         cartTotal = cartTotal + product.qty * product.price 
+        }
+        return '';
       });
       return cartTotal;
     }
   render(){
-    const {products} = this.state;
+    const {products , loading} = this.state;
   return (
     <div className="App">
     <h1>Cart</h1>
@@ -94,6 +100,7 @@ class App extends React.Component {
     onDeleteProduct    = {this.handleDeleteProduct}
 
     />
+    {loading && <h1>Loading products ...</h1>}
     <div style={{fontSize:20,padding:10}}> TOTAL:{this.getCartTotal()}</div>
 
     </div>
